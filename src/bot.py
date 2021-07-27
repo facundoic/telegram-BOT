@@ -18,4 +18,5 @@ print('---------------------------------------WHO SENDs ME ')
 updates = bot.get_updates()
 print(updates[0])
 
-bot.send_message(text='Hola Facundo!', chat_id=751034701)
+name = updates[0]['message']['chat']['username']
+bot.send_message(text='Hi ' + name, chat_id=751034701)
