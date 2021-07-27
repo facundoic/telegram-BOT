@@ -1,22 +1,27 @@
 import logging
 import telegram
+from telegram.ext import Updater, CommandHandler
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 token = os.getenv("TOKEN")
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-logger = logging.getLogger(__name__)
 
-bot = telegram.Bot(token=token)
-print('------------------------------------------WHO I AM')
-print(bot.get_me())
+def start(update, context):
+    name = update.message.from_user.username
+    update.message.reply_text("Hi {} , welcome".format(name))
 
-print('---------------------------------------WHO SENDs ME ')
-updates = bot.get_updates()
-print(updates[0])
 
-name = updates[0]['message']['chat']['username']
-bot.send_message(text='Hi ' + name, chat_id=751034701)
+def main():
+    updater = Updater(token)
+    updater.dispatcher.add_handler(CommandHandler("start", start))
+
+    # Start
+    updater.start_polling()
+
+    # Waiting
+    updater.idle()
+
+
+main()
