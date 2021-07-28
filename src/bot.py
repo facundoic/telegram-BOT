@@ -6,6 +6,9 @@ import os
 
 load_dotenv()
 token = os.getenv("TOKEN")
+path_images = os.getenv("PATH_IMAGES")
+
+print(path_images)
 
 
 def start(update, context):
@@ -13,13 +16,41 @@ def start(update, context):
     update.message.reply_text("Hi {} , welcome".format(name))
 
 
+def camera1(update, context):
+    image1 = path_images + 'camera1.jpg'
+    update.message.bot.send_photo(
+        update.message.chat.id, open(image1, 'rb'))
+
+
+def camera2(update, context):
+    image2 = path_images + 'camera2.jpg'
+    update.message.bot.send_photo(
+        update.message.chat.id, open(image2, 'rb'))
+
+
+def camera3(update, context):
+    image3 = path_images + 'camera3.jpg'
+    update.message.bot.send_photo(
+        update.message.chat.id, open(image3, 'rb'))
+
+
+def camera4(update, context):
+    image4 = path_images + 'camera4.jpg'
+    update.message.bot.send_photo(
+        update.message.chat.id, open(image4, 'rb'))
+
+
 def main():
     updater = Updater(token)
     updater.dispatcher.add_handler(CommandHandler("start", start))
+    updater.dispatcher.add_handler(CommandHandler("camera1", camera1))
+    updater.dispatcher.add_handler(CommandHandler("camera2", camera2))
+    updater.dispatcher.add_handler(CommandHandler("camera3", camera3))
+    updater.dispatcher.add_handler(CommandHandler("camera4", camera4))
 
     # Start
     updater.start_polling()
-
+    print("The bot started successfully ")
     # Waiting
     updater.idle()
 
